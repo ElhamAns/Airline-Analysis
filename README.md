@@ -193,15 +193,6 @@ The final GitHub repository directory structure will be added after confirmation
 
 The project includes Databricks notebooks for data ingestion, cleaning, and analytical transformations.
 
-### Confirmed Notebook Files
-
-| File | Description |
-|---|---|
-| `bronze_setup.py` | Bronze layer setup and validation |
-| `silver_setup.py` | Silver layer cleaning, deduplication, and data-quality analysis |
-
-Gold layer and Streamlit dashboard file paths will be added after confirmation.
-
 ---
 
 
