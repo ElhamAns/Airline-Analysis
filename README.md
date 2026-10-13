@@ -198,5 +198,12 @@ The project includes Databricks notebooks for data ingestion, cleaning, and anal
 
 ## 👥 Team
 
-......
+## 👥 Team
+
+This project was developed collaboratively as part of the **SDA × Le Wagon Data Engineering Bootcamp**.
+
+- **Maryam Mubarak**
+- **Razan Alzahrani**
+- **Elham Alansari**
+- **Nada Almutairi**
 
