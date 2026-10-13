@@ -196,7 +196,6 @@ The project includes Databricks notebooks for data ingestion, cleaning, and anal
 ---
 
 
-## 👥 Team
 
 ## 👥 Team
 
