@@ -22,8 +22,7 @@ The project uses a **Medallion Architecture (Bronze, Silver, and Gold)** impleme
 7. [Dashboard & User Interface](#-dashboard--user-interface)
 8. [Technologies & Tools](#-technologies--tools)
 9. [Project Structure](#-project-structure)
-10. [Project Status](#-project-status)
-11. [Team](#-team)
+10. [Team](#-team)
 
 ---
 
@@ -205,18 +204,6 @@ Gold layer and Streamlit dashboard file paths will be added after confirmation.
 
 ---
 
-## 🚧 Project Status
-
-| Component | Status |
-|---|---|
-| Dataset ingestion | Completed |
-| Bronze layer | Completed |
-| Silver layer | Implemented — under review |
-| Gold layer | In progress |
-| Streamlit dashboard | Planned / under development |
-| Final documentation | In progress |
-
----
 
 ## 👥 Team
 
