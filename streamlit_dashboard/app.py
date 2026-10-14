@@ -3,6 +3,53 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+st.markdown("""
+
+/* PREMIUM PAGE TITLES */
+.premium-page-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 0 18px 0;
+    margin: 0 0 24px 0;
+    border-bottom: 2px solid #E5ECF6;
+}
+.premium-page-title .title-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #163B65, #2878B5);
+    color: white;
+    font-size: 25px;
+    box-shadow: 0 5px 14px rgba(22, 59, 101, 0.18);
+}
+.premium-page-title .title-text {
+    color: #163B65;
+    font-size: 30px;
+    font-weight: 750;
+    letter-spacing: -0.6px;
+    line-height: 1.25;
+}
+.premium-page-title .title-subtitle {
+    color: #718096;
+    font-size: 13px;
+    margin-top: 5px;
+    font-weight: 400;
+}
+@media (max-width: 640px) {
+    .premium-page-title .title-text { font-size: 23px; }
+    .premium-page-title .title-icon {
+        width: 44px; height: 44px; min-width: 44px;
+    }
+}
+
+""", unsafe_allow_html=True)
+
+
 st.set_page_config(
     page_title="Airline Analysis | RUH",
     page_icon="✈️",
