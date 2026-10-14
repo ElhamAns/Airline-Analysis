@@ -49,7 +49,7 @@ The project objectives are to:
 
 The Gold notebook defines a **star schema** with a central flight fact table and dimensions for dates, airlines, airports, aircraft, terminals, and flight statuses.
 
-[Flight Data Warehouse Schema-2026-10-14-144851.pdf](https://github.com/user-attachments/files/33443369/Flight.Data.Warehouse.Schema-2026-10-14-144851.pdf)
+<img width="12050" height="4671" alt="Flight Data Warehouse Schema-2026-10-14-144851_page-0001" src="https://github.com/user-attachments/assets/095ac502-c947-450b-999e-cb26926d70c9" />
 
 ## 🏗️ Architecture Diagram
 
