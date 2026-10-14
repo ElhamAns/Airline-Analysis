@@ -2,11 +2,7 @@
 
 **Data Engineering Project | SDA × Le Wagon Data Engineering Bootcamp**
 
-An end-to-end data engineering project focused on processing and analyzing flight movement data from King Khalid International Airport (RUH), Riyadh, Saudi Arabia.
-
-The project uses a **Medallion Architecture (Bronze, Silver, and Gold)** implemented in Databricks to organize raw flight records, improve data quality, and prepare datasets for analysis and visualization through a Streamlit dashboard.
-
----
+A flight-data engineering and analytics project focused on King Khalid International Airport (RUH / OERK), Riyadh, Saudi Arabia. The project uses **Databricks**, **Delta Lake**, and a **Bronze–Silver–Gold Medallion Architecture** to organize flight movement records for analysis. An interactive **Streamlit dashboard** is planned to present the analytical results.
 
 ## 📑 Table of Contents
 
@@ -22,187 +18,181 @@ The project uses a **Medallion Architecture (Bronze, Silver, and Gold)** impleme
 7. [Dashboard & User Interface](#-dashboard--user-interface)
 8. [Technologies & Tools](#-technologies--tools)
 9. [Project Structure](#-project-structure)
-10. [Team](#-team)
+10. [Project Status](#-project-status)
+11. [Team](#-team)
 
 ---
 
 ## 📌 Project Overview
 
-Airline Analysis is a data engineering project that processes flight movement records associated with King Khalid International Airport (RUH).
+**Airline Analysis** processes flight movement data associated with **King Khalid International Airport (RUH)**. The source Parquet dataset contains **153,308 records and 23 columns**, including flight identifiers, airlines, aircraft, flight types, statuses, airport details, and scheduled times.
 
-The project follows the **Medallion Architecture** to separate raw data ingestion, data cleaning, and analytical transformations.
+The pipeline uses the Medallion Architecture in Databricks:
 
-The dataset contains **153,308 records** covering flight movements, airline information, aircraft details, airport identifiers, flight statuses, and scheduled flight times.
+**Source Parquet → Bronze (raw) → Silver (cleaned) → Gold (analytical model) → Streamlit (dashboard, planned)**
 
-Databricks is used to implement the data pipeline, with Delta tables organized into Bronze, Silver, and Gold layers.
-
-The processed data will be used to support an interactive Streamlit dashboard.
-
----
+The Bronze and Silver tables have been implemented. The Gold notebook defines a star schema and analytical queries; its final validation is ongoing.
 
 ## 🎯 Project Goal
 
-The project aims to build a structured data pipeline that transforms raw airport flight records into reliable datasets for analytical reporting.
+Build a structured data pipeline that prepares flight movement records for reliable analysis and reporting.
 
-### Main Objectives
+**Objectives:**
 
-- Ingest and preserve the original flight dataset.
-- Apply data cleaning, validation, and deduplication.
-- Organize the data using Bronze, Silver, and Gold layers.
-- Prepare analytical datasets for flight movement analysis.
-- Present the resulting insights through an interactive Streamlit dashboard.
-
----
+- Ingest the original flight dataset into a Delta table.
+- Inspect data quality, missing values, and duplicate records.
+- Prepare a cleaned Silver dataset for downstream transformations.
+- Model analytical data using a Gold-layer fact table and dimensions.
+- Present flight-related insights in an interactive **Streamlit dashboard**.
 
 ## 🗂️ ERD Diagram
 
-<img width="1195" height="493" alt="١" src="https://github.com/user-attachments/assets/e40ac296-8cf1-4d18-9784-d28ab2af3d97" />
+The Gold notebook defines a star-schema-style analytical model centered on `fact_flights`, with date, airline, airport, aircraft, terminal, and status dimensions.
 
+<!-- ERD IMAGE: Replace the src below if you upload an updated ERD. -->
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e40ac296-8cf1-4d18-9784-d28ab2af3d97" alt="Airline Analysis ERD diagram" width="100%" />
+</p>
 
-<!-- Add the confirmed ERD image here. -->
-
----
+> **Diagram note:** Confirm that the image reflects the final Gold schema before treating it as the definitive ERD.
 
 ## 🏗️ Architecture Diagram
 
-<img width="1672" height="940" alt="صوره" src="https://github.com/user-attachments/assets/afb4c976-5134-4af9-accb-9eb348200b5d" />
+The project uses Databricks to load Parquet data into Delta tables organized into Bronze, Silver, and Gold layers. The planned presentation layer is Streamlit.
 
-<!-- Add the confirmed architecture diagram here. -->
-
----
+<!-- ARCHITECTURE IMAGE: Replace the src below if you upload an updated architecture diagram. -->
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/afb4c976-5134-4af9-accb-9eb348200b5d" alt="Airline Analysis pipeline architecture diagram" width="100%" />
+</p>
 
 ## 📊 Selected Sources
 
 ### King Khalid International Airport Flights Dataset
 
-The project uses a flight movement dataset covering arrivals and departures associated with King Khalid International Airport (RUH / OERK), Riyadh, Saudi Arabia.
+The source is a Parquet file containing flight movement data associated with King Khalid International Airport, Riyadh. The dataset description provided for the project indicates that it was assembled from multiple aviation/flight-tracking APIs.
 
-The dataset was originally collected from multiple aviation and flight-tracking APIs and provided as an Apache Parquet file.
-
-### Dataset Information
-
-| Property | Description |
+| Property | Value |
 |---|---|
-| **Dataset** | King Khalid International Airport Flights |
-| **Source File** | `flights_RUH.parquet` |
-| **Format** | Apache Parquet |
-| **Records** | 153,308 |
-| **Columns** | 23 |
-| **Airport** | King Khalid International Airport (RUH / OERK) |
-| **License** | Apache 2.0 |
+| Source file | `flights_RUH.parquet` |
+| Format | Apache Parquet |
+| Records | 153,308 |
+| Columns | 23 |
+| Airport | King Khalid International Airport (RUH / OERK) |
+| Original dataset link | **To be added — source URL not yet confirmed** |
+| License | **To be verified against the original dataset page** |
 
-The dataset includes flight numbers, aircraft details, airline identifiers, arrival/departure types, flight statuses, airport information, and scheduled flight timestamps.
-
-**Original Dataset URL:** To be added.
-
----
+The dataset includes `flight_number`, `flight_type`, `status`, airline and aircraft fields, airport identifiers, and scheduled UTC/local times.
 
 ## 🔄 Medallion Layers
 
-The data pipeline follows the **Medallion Architecture** to progressively transform flight records from raw source data into analytical datasets.
-
 ### 🥉 Bronze Layer — Raw Data
 
-The Bronze layer preserves the original flight records without applying business transformations.
+**Purpose:** Preserve the source records in a Delta table for downstream processing.
 
-**Implemented Tasks**
+**Implemented work:**
 
-- Loaded the source Parquet dataset into Databricks.
-- Created a Delta table to store the raw flight records.
-- Inspected the table schema and sample records.
-- Verified the record count against the original dataset.
+- Read the source Parquet file from a Databricks Volume.
+- Created the Bronze Delta table using SQL.
+- Inspected the schema and sample records.
+- Compared source and Bronze record counts.
+- Inspected Delta table metadata.
 
-**Table:** `workspace.bronze.flights_raw`
-
-**Records:** 153,308
-
----
+**Table:** `workspace.bronze.flights_raw`  
+**Verified records:** **153,308**
 
 ### 🥈 Silver Layer — Cleaned Data
 
-The Silver layer prepares the flight data for downstream analysis through data cleaning and quality checks.
+**Purpose:** Prepare records for analysis through cleaning, deduplication, and data-quality investigation.
 
-**Implemented Tasks**
+**Implemented work:**
 
-- Trimmed whitespace and converted empty strings to null values in an initial cleaning step.
-- Investigated missing values across dataset columns.
-- Analyzed duplicate flight records.
-- Applied a deduplication rule based on flight number, scheduled UTC time, and origin/destination airport identifiers.
-- Investigated airport codes, airline names, flight statuses, and scheduled timestamps.
-- Applied filtering rules to the Silver dataset.
-- Validated the resulting record counts and checked for remaining duplicate keys.
+- Investigated missing values, flight identifiers, airport codes, airline names, and timestamps.
+- Included an initial PySpark step to trim string fields and convert empty strings to nulls.
+- Applied deduplication using flight number, scheduled UTC time, origin ICAO, and destination ICAO.
+- Applied additional filtering rules.
+- Checked for duplicate groups and reconciled Bronze-to-Silver record counts.
 
-**Table:** `workspace.silver.flights_clean`
+**Table:** `workspace.silver.flights_clean`  
+**Last verified records:** **146,421**
 
-**Current Records:** 146,421
-
-#### Data-Quality Findings
-
-| Finding | Records |
+| Validation finding | Records |
 |---|---:|
-| Extra duplicate records identified using the selected flight key | 2,789 |
-| Records with missing destination airport codes | 4,106 |
-| Records overlapping between the duplicate and missing-code groups | 8 |
+| Extra duplicate records under the selected flight key in Bronze | 2,789 |
+| Bronze records with missing destination airport codes | 4,106 |
+| Overlap between extra duplicate rows and missing-code rows | 8 |
 
-Verified that no repeated groups remained under the selected deduplication key.
+No duplicate groups remained in the verified Silver table under the selected key.
 
-> **Note:** The Silver cleaning rules are under review, particularly the treatment of records with missing destination airport codes. The current table is being preserved while downstream Gold development continues.
-
----
+> **Review note:** The Silver notebook contains multiple overwrite operations. Its final transformations, including how missing destination codes are handled, are under review. The initial whitespace-cleaning step should not be assumed to survive subsequent table recreation.
 
 ### 🥇 Gold Layer — Analytical Data
 
-The Gold layer is intended to transform the cleaned flight records into business-ready datasets for analytical reporting.
+**Purpose:** Organize cleaned flight records into a star-schema-style model for reporting and dashboard queries.
 
-**Status:** In progress.
+The uploaded Gold notebook defines these tables:
 
-The final Gold tables, metrics, and transformation logic will be documented after implementation and validation.
+| Table | Role |
+|---|---|
+| `gold.fact_flights` | Flight records and references to dimensions |
+| `gold.dim_date` | Scheduled date attributes |
+| `gold.dim_airline` | Airline details |
+| `gold.dim_airport` | Airport details; referenced for origin and destination |
+| `gold.dim_aircraft` | Aircraft details |
+| `gold.dim_terminal` | Terminal values |
+| `gold.dim_status` | Flight status values |
 
----
+The notebook also contains analytical SQL for destination rankings, airline flight share, flight counts by hour and weekday, status distributions, and missing-dimension reporting.
+
+**Status:** Gold implementation has been written; final data-quality and join validation is still pending. These queries should not yet be presented as verified dashboard outputs.
 
 ## 📈 Dashboard & User Interface
 
-The project will use **Streamlit** to present flight analysis results through an interactive dashboard.
+An interactive dashboard will be developed using **[Streamlit](https://streamlit.io/)** to present insights derived from the Gold layer.
 
-The dashboard is planned to consume the prepared analytical data from the Gold layer.
+**Status:** Planned / under development. The final charts, filters, deployment URL, and screenshots will be added after implementation.
 
-**Status:** Planned / under development.
-
-The final dashboard features, charts, filters, and deployment details will be documented once confirmed.
-
----
+<!-- DASHBOARD SCREENSHOT: When ready, insert your screenshot here, for example:
+![Streamlit dashboard overview](docs/images/dashboard-overview.png)
+-->
 
 ## 🛠️ Technologies & Tools
 
-| Technology | Purpose |
+| Technology | Role in this project |
 |---|---|
-| **Python** | Data processing and notebook development |
-| **PySpark** | Distributed data transformations |
-| **SQL** | Data exploration, validation, and transformations |
-| **Databricks** | Data engineering and processing environment |
-| **Delta Lake** | Storage format for Medallion tables |
-| **Apache Parquet** | Original dataset format |
-| **Git & GitHub** | Version control and source code repository |
-| **Streamlit** | Planned interactive dashboard |
-
----
+| Python / PySpark | Data cleaning and inspection in Databricks notebooks |
+| SQL | Ingestion, validation, modeling, and analytical queries |
+| Databricks | Pipeline development and data processing |
+| Delta Lake | Bronze, Silver, and Gold table storage |
+| Apache Parquet | Original source file format |
+| Git & GitHub | Version control and project documentation |
+| Streamlit | Planned dashboard and user interface |
 
 ## 📁 Project Structure
 
-The final GitHub repository directory structure will be added after confirmation.
+The exact GitHub directory structure has **not yet been confirmed**. The following notebook filenames have been provided for review; their final repository paths will be documented after confirmation:
 
-The project includes Databricks notebooks for data ingestion, cleaning, and analytical transformations.
+- `bronze_setup.py` — Raw ingestion and Bronze checks.
+- `silver_setup.py` — Silver cleaning, exploration, deduplication, and validation.
+- `gold_layer.py` — Gold dimensions, fact table, and analytical queries.
 
----
+<!-- Replace this section with the actual GitHub folder tree after confirming it. -->
 
+## 🚧 Project Status
 
+| Component | Status |
+|---|---|
+| Source data ingestion | Implemented and record count checked |
+| Bronze layer | Implemented |
+| Silver layer | Implemented; transformation review pending |
+| Gold layer | Notebook written; final validation pending |
+| Streamlit dashboard | Planned / under development |
+| Repository documentation | In progress |
 
 ## 👥 Team
 
-This project was developed collaboratively as part of the **SDA × Le Wagon Data Engineering Bootcamp**.
+Developed collaboratively as part of the **SDA × Le Wagon Data Engineering Bootcamp**.
 
 - **Maryam Mubarak**
 - **Razan Alzahrani**
 - **Elham Alansari**
 - **Nada Almutairi**
-
