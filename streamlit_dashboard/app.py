@@ -4,7 +4,7 @@ import plotly.express as px
 import streamlit as st
 
 st.markdown("""
-
+<style>
 /* PREMIUM PAGE TITLES */
 .premium-page-title {
     display: flex;
@@ -46,7 +46,7 @@ st.markdown("""
         width: 44px; height: 44px; min-width: 44px;
     }
 }
-
+</style>
 """, unsafe_allow_html=True)
 
 
