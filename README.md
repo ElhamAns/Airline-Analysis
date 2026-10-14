@@ -49,13 +49,13 @@ The project objectives are to:
 
 The Gold notebook defines a **star schema** with a central flight fact table and dimensions for dates, airlines, airports, aircraft, terminals, and flight statuses.
 
-<img width="12050" height="4671" alt="Flight Data Warehouse Schema-2026-10-14-144851_page-0001" src="https://github.com/user-attachments/assets/095ac502-c947-450b-999e-cb26926d70c9" />
+<img width="1195" height="493" alt="Airline Analysis ERD diagram" src="https://github.com/user-attachments/assets/095ac502-c947-450b-999e-cb26926d70c9" />
 
 ## 🏗️ Architecture Diagram
 
 The project organizes source Parquet data through **Bronze**, **Silver**, and **Gold** layers in Databricks, with analytical outputs used by the Streamlit dashboard.
 
-<img width="1684" height="934" alt="RUH Architecture Diagram" src="https://github.com/user-attachments/assets/c2c7664b-53c8-4c89-ba01-768826571284" />
+<img width="1684" height="934" alt="Airline Analysis architecture diagram" src="https://github.com/user-attachments/assets/c2c7664b-53c8-4c89-ba01-768826571284" />
 
 ## 📊 Selected Sources
 
