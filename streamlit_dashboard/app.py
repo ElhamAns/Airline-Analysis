@@ -466,7 +466,59 @@ if page == "Overview":
     </div>
     """, unsafe_allow_html=True)
 else:
-    st.markdown(f'<div class="eyebrow">AIRLINE ANALYTICS / RUH</div>', unsafe_allow_html=True)
+    page_headers = {
+        "Flight_Operations": {
+            "image": "https://images.unsplash.com/photo-1725957252008-b389134976db?auto=format&fit=crop&w=2000&q=90",
+            "title": "Flight Operations",
+            "description": "Explore flight activity, operational trends, and flight status."
+        },
+        "Airport_Insights": {
+            "image": "https://images.unsplash.com/photo-1750259051416-358589f5409c?auto=format&fit=crop&w=2000&q=90",
+            "title": "Airport Insights",
+            "description": "Discover airport activity, destination patterns, and traffic insights."
+        },
+        "Airline_Performance": {
+            "image": "https://images.unsplash.com/photo-1759734065122-dfbeb7e78ccc?auto=format&fit=crop&w=2000&q=90",
+            "title": "Airline Performance",
+            "description": "Compare airline activity and uncover performance patterns."
+        },
+    }
+
+    header = page_headers.get(page)
+    if header:
+        st.markdown(f"""
+        <style>
+        .aircraft-hero-background {{
+            background-size: cover !important;
+            background-position: center 45% !important;
+            background-repeat: no-repeat !important;
+            color: #FFFFFF !important;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.65);
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }}
+        .aircraft-hero-background h1,
+        .aircraft-hero-background p,
+        .aircraft-hero-background .eyebrow {{
+            color: #FFFFFF !important;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.75);
+        }}
+        </style>
+        <div class="hero aircraft-hero-background"
+             style="background-image: linear-gradient(
+                 90deg,
+                 rgba(9,25,43,0.88) 0%,
+                 rgba(9,25,43,0.64) 55%,
+                 rgba(9,25,43,0.25) 100%
+             ), url('{header["image"]}');">
+          <div class="eyebrow">AIRLINE ANALYTICS / RUH</div>
+          <h1>{header["title"]}</h1>
+          <p>{header["description"]}</p>
+          <p>📍 King Khalid International Airport (RUH), Riyadh, Saudi Arabia</p>
+        </div>
+        """, unsafe_allow_html=True)
     st.title(page.replace("_", " "))
     st.caption("Explore the flight dataset using the interactive filters in the sidebar.")
 
