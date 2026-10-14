@@ -597,3 +597,16 @@ for col, (name, url) in zip(cols, team):
             unsafe_allow_html=True,
         )
 st.caption("✈️ Airline Analysis · SDA & Le Wagon")
+
+
+st.markdown("""
+<style>
+/* FIX_EXPLORE_DASHBOARD_RADIO_CIRCLES */
+div[data-testid="stRadio"] label > div:first-child {
+    display: none !important;
+}
+div[data-testid="stRadio"] label {
+    gap: 0 !important;
+}
+</style>
+""", unsafe_allow_html=True)
