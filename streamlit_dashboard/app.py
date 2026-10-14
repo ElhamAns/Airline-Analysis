@@ -349,6 +349,19 @@ st.sidebar.markdown("""
 ">EXPLORE DASHBOARD</div>
 """, unsafe_allow_html=True)
 
+st.sidebar.markdown("""
+<style>
+/* SIDEBAR_RADIO_CIRCLE_FIX */
+section[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] > label > div:first-child {
+    display: none !important;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] > label {
+    padding-left: 0 !important;
+    gap: 0 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 page = st.sidebar.radio(
     "Choose a page",
     [
