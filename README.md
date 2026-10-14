@@ -26,6 +26,7 @@ Airline Analysis is a data engineering and analytics project focused on flight m
 
 ---
 
+<a id="project-overview"></a>
 ## 📌 Project Overview
 
 The project processes flight movement records associated with King Khalid International Airport and organizes them into data engineering layers for analytical use.
@@ -34,6 +35,7 @@ The source Parquet file contains **153,308 records** and **23 columns**, includi
 
 The pipeline uses **Databricks notebooks** and **Delta tables** for ingestion, preparation, and analytical modeling. A **Streamlit application** provides the user-facing interface for exploring the data.
 
+<a id="project-goal"></a>
 ## 🎯 Project Goal
 
 Build a structured data pipeline that makes airport flight movement data easier to inspect, prepare, and analyze.
@@ -45,18 +47,21 @@ The project objectives are to:
 - Organize analytical data using a dimensional model.
 - Support exploration of flight operations, airports, airlines, and data quality through Streamlit.
 
+<a id="erd-diagram"></a>
 ## 🗂️ ERD Diagram
 
 The Gold notebook defines a **star schema** with a central flight fact table and dimensions for dates, airlines, airports, aircraft, terminals, and flight statuses.
 
 <img width="1195" height="493" alt="Airline Analysis ERD diagram" src="https://github.com/user-attachments/assets/095ac502-c947-450b-999e-cb26926d70c9" />
 
+<a id="architecture-diagram"></a>
 ## 🏗️ Architecture Diagram
 
 The project organizes source Parquet data through **Bronze**, **Silver**, and **Gold** layers in Databricks, with analytical outputs used by the Streamlit dashboard.
 
 <img width="1684" height="934" alt="Airline Analysis architecture diagram" src="https://github.com/user-attachments/assets/c2c7664b-53c8-4c89-ba01-768826571284" />
 
+<a id="selected-sources"></a>
 ## 📊 Selected Sources
 
 ### King Khalid International Airport Flights Dataset
@@ -74,10 +79,12 @@ The project uses the [King Khalid International Airport Flights Dataset on Kaggl
 
 The data contains flight identifiers, aircraft information, airline codes and names, airport information, flight classifications, and scheduled times. The source is stored in the repository under `data/`.
 
+<a id="medallion-layers"></a>
 ## 🔄 Medallion Layers
 
 The pipeline uses the **Medallion Architecture** to separate source preservation, data preparation, and analytical modeling.
 
+<a id="bronze-layer--raw-data"></a>
 ### 🥉 Bronze Layer — Raw Data
 
 The Bronze notebook reads the source Parquet file and creates a Delta table without applying business-level transformations.
@@ -90,6 +97,7 @@ The notebook includes row-count checks, schema inspection, a sample preview, and
 
 **Notebook:** [`pipelines/bronze/bronze_setup.ipynb`](pipelines/bronze/bronze_setup.ipynb)
 
+<a id="silver-layer--cleaned-data"></a>
 ### 🥈 Silver Layer — Cleaned Data
 
 The Silver notebook contains data preparation, exploratory quality checks, and deduplication logic. Its transformations include text trimming and empty-string handling, duplicate identification using flight identifiers and scheduled time, and filtering based on airport identifiers and scheduled timestamps.
@@ -102,6 +110,7 @@ The notebook also examines missing values, airline and airport names, flight sta
 
 **Notebook:** [`pipelines/silver/silver_setup.ipynb`](pipelines/silver/silver_setup.ipynb)
 
+<a id="gold-layer--analytical-data"></a>
 ### 🥇 Gold Layer — Analytical Data
 
 The Gold notebook defines a dimensional model for flight analytics, consisting of a central fact table and six dimensions.
@@ -120,6 +129,7 @@ The Gold notebook also contains analytical SQL for destination rankings, airline
 
 **Notebook:** [`pipelines/gold/gold_layer.ipynb`](pipelines/gold/gold_layer.ipynb)
 
+<a id="dashboard--user-interface"></a>
 ## 📈 Dashboard & User Interface
 
 The interactive user interface is built with **Streamlit** and organized into dedicated pages for flight operations, airport insights, airline performance, and data quality.
@@ -138,6 +148,7 @@ The repository contains these dashboard entry points:
 
 Dashboard screenshots are intentionally omitted; the live application is linked directly above.
 
+<a id="technologies--tools"></a>
 ## 🛠️ Technologies & Tools
 
 | Technology | Use in the project |
@@ -151,6 +162,7 @@ Dashboard screenshots are intentionally omitted; the live application is linked 
 | Streamlit | Interactive dashboard |
 | Git & GitHub | Version control and project repository |
 
+<a id="project-structure"></a>
 ## 📁 Project Structure
 
 ```text
@@ -190,6 +202,7 @@ Airline-Analysis/
 └── README.md
 ```
 
+<a id="team"></a>
 ## 👥 Team
 
 Developed collaboratively as part of the **SDA × Le Wagon Data Engineering Bootcamp**.
