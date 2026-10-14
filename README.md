@@ -132,21 +132,20 @@ The Gold notebook also contains analytical SQL for destination rankings, airline
 <a id="dashboard--user-interface"></a>
 ## 📈 Dashboard & User Interface
 
-The interactive user interface is built with **Streamlit** and organized into dedicated pages for flight operations, airport insights, airline performance, and data quality.
+The interactive user interface is built with **Streamlit** and organized into dedicated pages for project overview, flight operations, airport insights, airline performance, and data quality.
 
-**[🚀 Open the Airline Analysis Dashboard](https://airline-analysis-9bvjwckaswup245dlhozdk.streamlit.app/)**
+🚀 **[Open the Airline Analysis Dashboard](https://airline-analysis-9bvjwckaswup245dlhozdk.streamlit.app/)**
 
 The repository contains these dashboard entry points:
 
 | File | Page |
 |---|---|
 | `streamlit_dashboard/app.py` | Main application |
-| `streamlit_dashboard/pages/1_Flight_Operations.py` | Flight Operations |
-| `streamlit_dashboard/pages/2_Airport_Insights.py` | Airport Insights |
-| `streamlit_dashboard/pages/3_Airline_Performance.py` | Airline Performance |
+| `streamlit_dashboard/pages/Overview.py` | Overview |
+| `streamlit_dashboard/pages/Flight_Operations.py` | Flight Operations |
+| `streamlit_dashboard/pages/Airport_Insights.py` | Airport Insights |
+| `streamlit_dashboard/pages/Airline_Performance.py` | Airline Performance |
 | `streamlit_dashboard/pages/4_Data_Quality.py` | Data Quality |
-
-Dashboard screenshots are intentionally omitted; the live application is linked directly above.
 
 <a id="technologies--tools"></a>
 ## 🛠️ Technologies & Tools
@@ -189,17 +188,18 @@ Airline-Analysis/
 │   ├── .streamlit/
 │   │   └── config.toml
 │   ├── pages/
-│   │   ├── 1_Flight_Operations.py
-│   │   ├── 2_Airport_Insights.py
-│   │   ├── 3_Airline_Performance.py
+│   │   ├── Overview.py
+│   │   ├── Flight_Operations.py
+│   │   ├── Airport_Insights.py
+│   │   ├── Airline_Performance.py
 │   │   └── 4_Data_Quality.py
 │   ├── app.py
 │   └── requirements.txt
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
-├── uv.lock
-└── README.md
+├── README.md
+└── uv.lock
 ```
 
 <a id="team"></a>
