@@ -691,8 +691,14 @@ elif page == "Airline_Performance":
 
 # ---------- Team & Footer ----------
 st.markdown("---")
-st.markdown("## 👩🏻‍💻 Meet the Team")
-st.caption("Training Camp by SDA & Le Wagon")
+st.markdown(
+    "<h2 style='text-align: center;'>👩🏻‍💻 Meet the Team</h2>",
+    unsafe_allow_html=True
+)
+st.markdown(
+    "<p style='text-align: center;'>Training Camp by SDA & Le Wagon</p>",
+    unsafe_allow_html=True
+)
 team = [
     ("MARIAM MUBARAK", "https://www.linkedin.com/in/maryam-mubarak-548b42296/"),
     ("Razan Alzahrani", "https://www.linkedin.com/in/razan-alzahrani-89513620b/"),
@@ -708,7 +714,7 @@ for col, (name, url) in zip(cols, team):
             f'<a class="team-link" href="{url}" target="_blank">View LinkedIn ↗</a></div>',
             unsafe_allow_html=True,
         )
-st.caption("✈️ Airline Analysis · SDA & Le Wagon")
+
 
 
 st.markdown("""
@@ -722,3 +728,8 @@ div[data-testid="stRadio"] label {
 }
 </style>
 """, unsafe_allow_html=True)
+
+st.markdown(
+    "<p style='text-align: center;'>✈️ Airline Analysis · SDA & Le Wagon</p>",
+    unsafe_allow_html=True
+)
