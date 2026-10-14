@@ -1,0 +1,1469 @@
+{
+  "datasets": [
+    {
+      "name": "618ab07a",
+      "displayName": "Flight Type Counts Summary",
+      "queryLines": [
+        "SELECT \r\n",
+        "    flight_type,\r\n",
+        "    COUNT(*) AS total_flights\r\n",
+        "FROM gold.fact_flights\r\n",
+        "GROUP BY flight_type"
+      ],
+      "catalog": "workspace",
+      "schema": "gold"
+    },
+    {
+      "name": "b0ba2089",
+      "displayName": "Top Fifteen Airlines Ranked by Flight Volume",
+      "queryLines": [
+        "SELECT \n",
+        "    al.airline_name,\n",
+        "    COUNT(*) AS total_flights\n",
+        "FROM gold.fact_flights f\n",
+        "JOIN gold.dim_airline al ON f.airline_id = al.airline_id\n",
+        "WHERE al.airline_id != -1\n",
+        "GROUP BY al.airline_name\n",
+        "ORDER BY total_flights DESC\n",
+        "LIMIT 15;"
+      ]
+    },
+    {
+      "name": "top_aircraft",
+      "displayName": "Top 10 Aircraft Models",
+      "queryLines": [
+        "SELECT\n",
+        "  ac.aircraft_model,\n",
+        "  COUNT(*) AS total_flights\n",
+        "FROM\n",
+        "  gold.fact_flights f\n",
+        "    JOIN gold.dim_aircraft ac\n",
+        "      ON f.aircraft_id = ac.aircraft_id\n",
+        "WHERE\n",
+        "  f.aircraft_id != -1\n",
+        "GROUP BY\n",
+        "  ac.aircraft_model\n",
+        "ORDER BY\n",
+        "  total_flights DESC\n",
+        "LIMIT 10"
+      ]
+    },
+    {
+      "name": "terminal_dist",
+      "displayName": "Terminal Distribution",
+      "queryLines": [
+        "SELECT\n",
+        "  t.terminal,\n",
+        "  COUNT(*) AS total_flights\n",
+        "FROM\n",
+        "  gold.fact_flights f\n",
+        "    JOIN gold.dim_terminal t\n",
+        "      ON f.terminal_id = t.terminal_id\n",
+        "WHERE\n",
+        "  f.terminal_id != -1\n",
+        "GROUP BY\n",
+        "  t.terminal"
+      ]
+    },
+    {
+      "name": "top_origins",
+      "displayName": "Top 10 Origin Airports",
+      "queryLines": [
+        "SELECT\n",
+        "  org.airport_name AS origin_airport,\n",
+        "  COUNT(*) AS total_flights\n",
+        "FROM\n",
+        "  gold.fact_flights f\n",
+        "    JOIN gold.dim_airport org\n",
+        "      ON f.origin_airport_id = org.airport_id\n",
+        "WHERE\n",
+        "  f.origin_airport_id != -1\n",
+        "GROUP BY\n",
+        "  org.airport_name\n",
+        "ORDER BY\n",
+        "  total_flights DESC\n",
+        "LIMIT 10"
+      ]
+    },
+    {
+      "name": "flight_attributes",
+      "displayName": "Flight Attributes Distribution",
+      "queryLines": [
+        "SELECT\n",
+        "  s.status,\n",
+        "  f.isCargo,\n",
+        "  f.codeshareStatus,\n",
+        "  COUNT(*) AS total_flights\n",
+        "FROM\n",
+        "  gold.fact_flights f\n",
+        "    LEFT JOIN gold.dim_status s\n",
+        "      ON f.status_id = s.status_id\n",
+        "GROUP BY\n",
+        "  s.status,\n",
+        "  f.isCargo,\n",
+        "  f.codeshareStatus"
+      ]
+    },
+    {
+      "name": "top_destinations",
+      "displayName": "Top 10 Destination Airports",
+      "queryLines": [
+        "SELECT\n",
+        "  dest.airport_name AS destination_airport,\n",
+        "  COUNT(*) AS total_flights\n",
+        "FROM\n",
+        "  gold.fact_flights f\n",
+        "    JOIN gold.dim_airport dest\n",
+        "      ON f.destination_airport_id = dest.airport_id\n",
+        "WHERE\n",
+        "  f.destination_airport_id != -1\n",
+        "GROUP BY\n",
+        "  dest.airport_name\n",
+        "ORDER BY\n",
+        "  total_flights DESC\n",
+        "LIMIT 10"
+      ]
+    },
+    {
+      "name": "overview_stats",
+      "displayName": "Overview Statistics",
+      "queryLines": [
+        "SELECT\n",
+        "  COUNT(DISTINCT\n",
+        "    CASE\n",
+        "      WHEN airline_id != -1 THEN airline_id\n",
+        "    END\n",
+        "  ) AS total_airlines,\n",
+        "  COUNT(DISTINCT\n",
+        "    CASE\n",
+        "      WHEN destination_airport_id != -1 THEN destination_airport_id\n",
+        "    END\n",
+        "  ) AS total_destinations,\n",
+        "  COUNT(DISTINCT\n",
+        "    CASE\n",
+        "      WHEN aircraft_id != -1 THEN aircraft_id\n",
+        "    END\n",
+        "  ) AS total_aircraft\n",
+        "FROM\n",
+        "  gold.fact_flights"
+      ]
+    },
+    {
+      "name": "time_analysis",
+      "displayName": "Flight Time Analysis",
+      "queryLines": [
+        "SELECT\n",
+        "  d.month,\n",
+        "  d.day_of_week_num,\n",
+        "  COUNT(*) AS total_flights\n",
+        "FROM\n",
+        "  gold.fact_flights f\n",
+        "    JOIN gold.dim_date d\n",
+        "      ON f.date_id = d.date_id\n",
+        "GROUP BY\n",
+        "  d.month,\n",
+        "  d.day_of_week_num"
+      ]
+    }
+  ],
+  "relationshipGraphs": [
+    {
+      "sources": [
+        {
+          "name": "Untitled_dataset",
+          "datasetName": "618ab07a"
+        },
+        {
+          "name": "Untitled_dataset_1",
+          "datasetName": "b0ba2089"
+        },
+        {
+          "name": "Top_10_Aircraft_Models",
+          "datasetName": "top_aircraft"
+        },
+        {
+          "name": "Terminal_Distribution",
+          "datasetName": "terminal_dist"
+        },
+        {
+          "name": "Top_10_Origin_Airports",
+          "datasetName": "top_origins"
+        },
+        {
+          "name": "Flight_Attributes_Distribution",
+          "datasetName": "flight_attributes"
+        },
+        {
+          "name": "Top_10_Destination_Airports",
+          "datasetName": "top_destinations"
+        },
+        {
+          "name": "Overview_Statistics",
+          "datasetName": "overview_stats"
+        },
+        {
+          "name": "Flight_Time_Analysis",
+          "datasetName": "time_analysis"
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "0e926907",
+      "displayName": "نظرة عامة",
+      "layout": [
+        {
+          "widget": {
+            "name": "1ca24623",
+            "multilineTextboxSpec": {
+              "lines": [
+                "# <span style=\"text-align:center;display:block\"><span style=\"font-size: 30px;font-family: Times New Roman;font-weight: 700;\">King Khalid International Airport - Flight Analytics</span></span>"
+              ],
+              "verticalAlign": "VERTICAL_ALIGN_CENTER"
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "dark": "#1D3E5A"
+              },
+              "widgetBorderColor": {
+                "dark": "#0464B8"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "3cff91bf",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## <span style=\"text-align:justify;display:block;\"><span style=\"font-size:18px;color:#FB9A99\">This dashboard analyzes flight movements at King Khalid International Airport (KKIA) in Riyadh, Saudi Arabia.The data covers 150,519 flights operated by 64 airlines to 121 destinations over a period of 211 days.The analysis is based on a Star Schema model built on Databricks, covering arrivals, departures, airline performance,aircraft types, and scheduled traffic patterns.</span></span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 12,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_total_flights",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Untitled_dataset__total_flights)",
+                      "expression": "SUM(`Untitled_dataset`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Flights"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Untitled_dataset__total_flights)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_airlines",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Overview_Statistics__total_airlines)",
+                      "expression": "SUM(`Overview_Statistics`.`total_airlines`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Airlines"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Overview_Statistics__total_airlines)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 5,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_destinations",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Overview_Statistics__total_destinations)",
+                      "expression": "SUM(`Overview_Statistics`.`total_destinations`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Destinations"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Overview_Statistics__total_destinations)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 5,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_aircraft",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Overview_Statistics__total_aircraft)",
+                      "expression": "SUM(`Overview_Statistics`.`total_aircraft`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Aircraft"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Overview_Statistics__total_aircraft)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 5,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_flight_type",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Untitled_dataset__total_flights)",
+                      "expression": "SUM(`Untitled_dataset`.`total_flights`)"
+                    },
+                    {
+                      "name": "Untitled_dataset__flight_type",
+                      "expression": "`Untitled_dataset`.`flight_type`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Flights by Type"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(Untitled_dataset__total_flights)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "total_flights"
+                },
+                "color": {
+                  "fieldName": "Untitled_dataset__flight_type",
+                  "displayName": "flight_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_flight_status",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Flight_Attributes_Distribution__status",
+                      "expression": "`Flight_Attributes_Distribution`.`status`"
+                    },
+                    {
+                      "name": "sum(Flight_Attributes_Distribution__total_flights)",
+                      "expression": "SUM(`Flight_Attributes_Distribution`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Flight Status Distribution"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Flight_Attributes_Distribution__status",
+                  "displayName": "status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Flight_Attributes_Distribution__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Flight_Attributes_Distribution__status",
+                  "displayName": "status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 8,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "854e904c",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "filter_flight_type",
+            "queries": [
+              {
+                "name": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/0a0ede3c21554550895f06fcc38e2dea_flight_type",
+                "query": {
+                  "datasetName": "618ab07a",
+                  "fields": [
+                    {
+                      "name": "flight_type",
+                      "expression": "`flight_type`"
+                    },
+                    {
+                      "name": "flight_type_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Flight Type"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "flight_type",
+                    "queryName": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/0a0ede3c21554550895f06fcc38e2dea_flight_type"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_airline",
+            "queries": [
+              {
+                "name": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/8c3fea3b846b4fbda957f5ea11b970e5_airline_name",
+                "query": {
+                  "datasetName": "b0ba2089",
+                  "fields": [
+                    {
+                      "name": "airline_name",
+                      "expression": "`airline_name`"
+                    },
+                    {
+                      "name": "airline_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Airline"
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "airline_name",
+                    "queryName": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/8c3fea3b846b4fbda957f5ea11b970e5_airline_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_status",
+            "queries": [
+              {
+                "name": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/46567f9369b1483088aed3f60f00fdaf_status",
+                "query": {
+                  "datasetName": "flight_attributes",
+                  "fields": [
+                    {
+                      "name": "status",
+                      "expression": "`status`"
+                    },
+                    {
+                      "name": "status_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Flight Status"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "status",
+                    "queryName": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/46567f9369b1483088aed3f60f00fdaf_status"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filter_month",
+            "queries": [
+              {
+                "name": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/56a3463af5aa408eb46ed8dc5b5e4a79_month",
+                "query": {
+                  "datasetName": "time_analysis",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "month_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Month"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "month",
+                    "queryName": "dashboards/01f1c7169eb9156db28b475dac89976a/datasets/56a3463af5aa408eb46ed8dc5b5e4a79_month"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "0a6d799c",
+      "displayName": "عمليات الطيران",
+      "layout": [
+        {
+          "widget": {
+            "name": "line_monthly_trends",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Flight_Time_Analysis__month",
+                      "expression": "`Flight_Time_Analysis`.`month`"
+                    },
+                    {
+                      "name": "sum(Flight_Time_Analysis__total_flights)",
+                      "expression": "SUM(`Flight_Time_Analysis`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Monthly Flight Trends"
+              },
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "Flight_Time_Analysis__month",
+                  "displayName": "month",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Flight_Time_Analysis__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Flight_Time_Analysis__month",
+                  "displayName": "month",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_day_of_week",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Flight_Time_Analysis__day_of_week_num",
+                      "expression": "`Flight_Time_Analysis`.`day_of_week_num`"
+                    },
+                    {
+                      "name": "sum(Flight_Time_Analysis__total_flights)",
+                      "expression": "SUM(`Flight_Time_Analysis`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": {
+                  "value": "Flights by Day of Week",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Flight_Time_Analysis__day_of_week_num",
+                  "displayName": "day_of_week_num",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Flight_Time_Analysis__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Flight_Time_Analysis__day_of_week_num",
+                  "displayName": "day_of_week_num",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_top_airlines",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Untitled_dataset_1__airline_name",
+                      "expression": "`Untitled_dataset_1`.`airline_name`"
+                    },
+                    {
+                      "name": "sum(Untitled_dataset_1__total_flights)",
+                      "expression": "SUM(`Untitled_dataset_1`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 15 Airlines by Flight Volume"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Untitled_dataset_1__airline_name",
+                  "displayName": "airline_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Untitled_dataset_1__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Untitled_dataset_1__airline_name",
+                  "displayName": "airline_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "airport_analysis",
+      "displayName": "تحليل المطارات",
+      "layout": [
+        {
+          "widget": {
+            "name": "bar_top_destinations",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Top_10_Destination_Airports__destination_airport",
+                      "expression": "`Top_10_Destination_Airports`.`destination_airport`"
+                    },
+                    {
+                      "name": "sum(Top_10_Destination_Airports__total_flights)",
+                      "expression": "SUM(`Top_10_Destination_Airports`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Destination Airports"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Top_10_Destination_Airports__destination_airport",
+                  "displayName": "destination_airport",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Top_10_Destination_Airports__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Top_10_Destination_Airports__destination_airport",
+                  "displayName": "destination_airport",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_top_origins",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Top_10_Origin_Airports__origin_airport",
+                      "expression": "`Top_10_Origin_Airports`.`origin_airport`"
+                    },
+                    {
+                      "name": "sum(Top_10_Origin_Airports__total_flights)",
+                      "expression": "SUM(`Top_10_Origin_Airports`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Origin Airports"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Top_10_Origin_Airports__origin_airport",
+                  "displayName": "origin_airport",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Top_10_Origin_Airports__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Top_10_Origin_Airports__origin_airport",
+                  "displayName": "origin_airport",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_terminal",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Terminal_Distribution__terminal",
+                      "expression": "`Terminal_Distribution`.`terminal`"
+                    },
+                    {
+                      "name": "sum(Terminal_Distribution__total_flights)",
+                      "expression": "SUM(`Terminal_Distribution`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Terminal Distribution"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Terminal_Distribution__terminal",
+                  "displayName": "terminal",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Terminal_Distribution__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Terminal_Distribution__terminal",
+                  "displayName": "terminal",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_cargo",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Flight_Attributes_Distribution__total_flights)",
+                      "expression": "SUM(`Flight_Attributes_Distribution`.`total_flights`)"
+                    },
+                    {
+                      "name": "Flight_Attributes_Distribution__isCargo",
+                      "expression": "`Flight_Attributes_Distribution`.`isCargo`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Cargo vs Passenger"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(Flight_Attributes_Distribution__total_flights)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "total_flights"
+                },
+                "color": {
+                  "fieldName": "Flight_Attributes_Distribution__isCargo",
+                  "displayName": "isCargo",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "aircraft_analysis",
+      "displayName": "تحليل الطائرات",
+      "layout": [
+        {
+          "widget": {
+            "name": "bar_top_aircraft",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Top_10_Aircraft_Models__aircraft_model",
+                      "expression": "`Top_10_Aircraft_Models`.`aircraft_model`"
+                    },
+                    {
+                      "name": "sum(Top_10_Aircraft_Models__total_flights)",
+                      "expression": "SUM(`Top_10_Aircraft_Models`.`total_flights`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Aircraft Models"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Top_10_Aircraft_Models__aircraft_model",
+                  "displayName": "aircraft_model",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(Top_10_Aircraft_Models__total_flights)",
+                  "displayName": "total_flights",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Top_10_Aircraft_Models__aircraft_model",
+                  "displayName": "aircraft_model",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_codeshare",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "sum(Flight_Attributes_Distribution__total_flights)",
+                      "expression": "SUM(`Flight_Attributes_Distribution`.`total_flights`)"
+                    },
+                    {
+                      "name": "Flight_Attributes_Distribution__codeshareStatus",
+                      "expression": "`Flight_Attributes_Distribution`.`codeshareStatus`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Codeshare Status Distribution"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(Flight_Attributes_Distribution__total_flights)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "total_flights"
+                },
+                "color": {
+                  "fieldName": "Flight_Attributes_Distribution__codeshareStatus",
+                  "displayName": "codeshareStatus",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "table_airline_summary",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Untitled_dataset_1__airline_name",
+                      "expression": "`Untitled_dataset_1`.`airline_name`"
+                    },
+                    {
+                      "name": "Untitled_dataset_1__total_flights",
+                      "expression": "`Untitled_dataset_1`.`total_flights`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Airline Flight Summary"
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "Untitled_dataset_1__airline_name"
+                  },
+                  {
+                    "fieldName": "Untitled_dataset_1__total_flights"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#E6E9EA",
+        "dark": "#1E2931"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#15181C"
+      },
+      "widgetBorderColor": {
+        "light": "#F3F5F6",
+        "dark": "#21292F"
+      },
+      "fontColor": {
+        "light": "#1A2127",
+        "dark": "#EEF0F2"
+      },
+      "selectionColor": {
+        "light": "#0E7AB9",
+        "dark": "#41ADEC"
+      },
+      "visualizationColors": [
+        "#A6CEE3",
+        "#1F78B4",
+        "#B2DF8A",
+        "#33A02C",
+        "#FB9A99",
+        "#E31A1C",
+        "#FDBF6F",
+        "#FF7F00",
+        "#CAB2D6",
+        "#6A3D9A",
+        "#FFFF99",
+        "#B15928"
+      ],
+      "widgetHeaderAlignment": "LEFT",
+      "fontFamily": "Inter",
+      "widgetPadding": 16,
+      "widgetMargin": 8,
+      "widgetCornerRadius": 16,
+      "widgetShadow": 50,
+      "continuousGradient": {
+        "lightMode": {
+          "fromCategoricalIndex": 0
+        },
+        "darkMode": {
+          "fromCategoricalIndex": 0
+        }
+      },
+      "fontSettings": {
+        "base": {
+          "fontFamily": "Inter",
+          "fontColor": {
+            "light": "#1A2127",
+            "dark": "#EEF0F2"
+          },
+          "fontSize": 14,
+          "fontWeight": 400
+        },
+        "widgetTitle": {
+          "fontSize": 16,
+          "fontWeight": 500
+        },
+        "widgetDescription": {
+          "fontSize": 14,
+          "fontWeight": 400
+        },
+        "fieldTitle": {
+          "textCase": "TEXT_CASE_UPPERCASE",
+          "fontColor": {
+            "light": "#31373D",
+            "dark": "#D6D8DA"
+          },
+          "fontSize": 13,
+          "fontWeight": 400
+        },
+        "fieldValue": {
+          "fontColor": {
+            "light": "#31373D",
+            "dark": "#D6D8DA"
+          },
+          "fontSize": 13,
+          "fontWeight": 400
+        }
+      },
+      "gridLineColor": {
+        "light": "#D6D7D8",
+        "dark": "#3C3E42"
+      },
+      "axisLineColor": {
+        "light": "#B0B4B6",
+        "dark": "#555E64"
+      }
+    },
+    "applyModeEnabled": false
+  }
+}
