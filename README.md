@@ -4,7 +4,7 @@
 
 Airline Analysis is a data engineering and analytics project focused on flight movements associated with **King Khalid International Airport (RUH / OERK)** in Riyadh, Saudi Arabia. It uses **Databricks**, **Delta Lake**, and a **Bronze–Silver–Gold Medallion Architecture** to organize aviation data for exploration and reporting through an interactive **Streamlit dashboard**.
 
-**[📊 Explore the Live Dashboard](https://airline-analysis-9bvjwckaswup245dlhozdk.streamlit.app/)** · **[📁 View the Dataset on Kaggle](https://www.kaggle.com/datasets/mohammedalsubaie/king-khalid-international-airport-flights-dataset/code)**
+🔗 **[🖥️ Explore the Interactive Dashboard](https://airline-analysis-9bvjwckaswup245dlhozdk.streamlit.app/)**
 
 ---
 
