@@ -19,10 +19,11 @@ Airline Analysis is a data engineering and analytics project focused on flight m
    - [Bronze Layer — Preserving the Source](#bronze-layer--preserving-the-source)
    - [Silver Layer — Improving Data Quality](#silver-layer--improving-data-quality)
    - [Gold Layer — Structuring Analytical Data](#gold-layer--structuring-analytical-data)
-7. [Dashboard & User Interface](#dashboard--user-interface)
-8. [Technologies & Tools](#technologies--tools)
-9. [Project Structure](#project-structure)
-10. [Team](#team)
+7. [Pipeline Automation & Data Quality](#pipeline-automation--data-quality)
+8. [Dashboard & User Interface](#dashboard--user-interface)
+9. [Technologies & Tools](#technologies--tools)
+10. [Project Structure](#project-structure)
+11. [Team](#team)
 
 ---
 
@@ -124,6 +125,30 @@ The pipeline follows the **Bronze–Silver–Gold Medallion Architecture** in Da
 
 **Implementation:** [Gold Notebook](pipelines/gold/gold_layer.ipynb)
 
+<a id="pipeline-automation--data-quality"></a>
+## ⚙️ Pipeline Automation & Data Quality
+
+The complete Bronze–Silver–Gold pipeline is orchestrated using **Databricks Lakeflow Jobs**, enabling automated data processing and validation.
+
+### Pipeline Orchestration
+
+- **Automated execution:** The Medallion pipeline runs through Databricks Lakeflow Jobs.
+- **Weekly schedule:** Every Sunday at 2:00 AM.
+- **Email notifications:** Configured to support pipeline monitoring.
+- **Resource efficiency:** Scheduled execution reduces manual intervention and helps manage compute usage.
+
+### Automated Quality Gates
+
+Automated validation checks are integrated into the pipeline to detect data quality issues before analytical processing.
+
+| Quality Check | Purpose |
+|---|---|
+| **Row Count Validation** | Checks record counts across processing stages |
+| **Primary-Key Uniqueness** | Detects duplicate primary keys |
+| **Foreign-Key Integrity** | Identifies invalid references between fact and dimension tables |
+
+These quality gates help prevent invalid data from reaching the Gold layer, supporting more reliable analytical results and dashboard reporting.
+
 <a id="dashboard--user-interface"></a>
 ## 📈 Dashboard & User Interface
 
@@ -155,6 +180,7 @@ The repository contains these dashboard entry points:
 | Apache Parquet | Source dataset format |
 | Streamlit | Interactive dashboard |
 | Git & GitHub | Version control and project repository |
+| Databricks Lakeflow Jobs | Pipeline orchestration, weekly scheduling, and automated execution |
 
 <a id="project-structure"></a>
 ## 📁 Project Structure
