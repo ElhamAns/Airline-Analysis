@@ -16,9 +16,9 @@ Airline Analysis is a data engineering and analytics project focused on flight m
 4. [Architecture Diagram](#architecture-diagram)
 5. [Selected Sources](#selected-sources)
 6. [Medallion Layers](#medallion-layers)
-   - [Bronze Layer — Raw Data](#bronze-layer--raw-data)
-   - [Silver Layer — Cleaned Data](#silver-layer--cleaned-data)
-   - [Gold Layer — Analytical Data](#gold-layer--analytical-data)
+   - [Bronze Layer — Preserving the Source](#bronze-layer--preserving-the-source)
+   - [Silver Layer — Improving Data Quality](#silver-layer--improving-data-quality)
+   - [Gold Layer — Structuring Analytical Data](#gold-layer--structuring-analytical-data)
 7. [Dashboard & User Interface](#dashboard--user-interface)
 8. [Technologies & Tools](#technologies--tools)
 9. [Project Structure](#project-structure)
@@ -59,7 +59,7 @@ The Gold notebook defines a **star schema** with a central flight fact table and
 
 The project organizes source Parquet data through **Bronze**, **Silver**, and **Gold** layers in Databricks, with analytical outputs used by the Streamlit dashboard.
 
-<img width="1684" height="934" alt="Airline Analysis architecture diagram" src="https://github.com/user-attachments/assets/c2c7664b-53c8-4c89-ba01-768826571284" />
+<img width="1684" height="778" alt="Airline Analysis architecture diagram" src="https://github.com/user-attachments/assets/6c6b5ed1-98d1-4b79-bd1e-8b05febce2fd" />
 
 <a id="selected-sources"></a>
 ## 📊 Selected Sources
@@ -79,55 +79,50 @@ The project uses the [King Khalid International Airport Flights Dataset on Kaggl
 
 The data contains flight identifiers, aircraft information, airline codes and names, airport information, flight classifications, and scheduled times. The source is stored in the repository under `data/`.
 
-<a id="medallion-layers"></a>
+<a id="medallion-layers"></a> 
+
 ## 🔄 Medallion Layers
 
-The pipeline uses the **Medallion Architecture** to separate source preservation, data preparation, and analytical modeling.
+The pipeline follows the **Bronze–Silver–Gold Medallion Architecture** in Databricks, separating raw data preservation, data quality transformations, and analytical modeling into three layers.
 
-<a id="bronze-layer--raw-data"></a>
-### 🥉 Bronze Layer — Raw Data
+<a id="bronze-layer--preserving-the-source"></a>
+### 🥉 Bronze Layer — Preserving the Source
 
-The Bronze notebook reads the source Parquet file and creates a Delta table without applying business-level transformations.
+**Approach:** Ingest the original Parquet dataset into a Delta table without applying business-level transformations.
 
-**Table:** `workspace.bronze.flights_raw`
+**Purpose:** Preserve the original flight records for traceability, inspection, and comparison with downstream layers.
 
-**Source records:** 153,308
+**Output:** `workspace.bronze.flights_raw` — **153,308 records**
 
-The notebook includes row-count checks, schema inspection, a sample preview, and a comparison of the source Parquet and Bronze table counts.
+**Implementation:** [Bronze Notebook](pipelines/bronze/bronze_setup.ipynb)
 
-**Notebook:** [`pipelines/bronze/bronze_setup.ipynb`](pipelines/bronze/bronze_setup.ipynb)
+---
 
-<a id="silver-layer--cleaned-data"></a>
-### 🥈 Silver Layer — Cleaned Data
+<a id="silver-layer--improving-data-quality"></a>
+### 🥈 Silver Layer — Improving Data Quality
 
-The Silver notebook contains data preparation, exploratory quality checks, and deduplication logic. Its transformations include text trimming and empty-string handling, duplicate identification using flight identifiers and scheduled time, and filtering based on airport identifiers and scheduled timestamps.
+**Approach:** Standardize text fields, handle empty strings, identify and remove duplicate flights, and apply required-field filters for airport identifiers and scheduled timestamps.
 
-**Table:** `workspace.silver.flights_clean`
+**Purpose:** Prepare consistent and structured flight records for downstream analytical processing.
 
-**Recorded Silver row count:** 146,421
+**Output:** `workspace.silver.flights_clean` — **146,421 records**
 
-The notebook also examines missing values, airline and airport names, flight statuses, and duplicate groups. The recorded checks identified **2,789 extra duplicate rows** under the selected key in Bronze and **4,106 source rows** with missing destination airport codes. These are observations about the source and transformation rules, not claims that all missing values represent invalid flights.
+**Implementation:** [Silver Notebook](pipelines/silver/silver_setup.ipynb)
 
-**Notebook:** [`pipelines/silver/silver_setup.ipynb`](pipelines/silver/silver_setup.ipynb)
+---
 
-<a id="gold-layer--analytical-data"></a>
-### 🥇 Gold Layer — Analytical Data
+<a id="gold-layer--structuring-analytical-data"></a>
+### 🥇 Gold Layer — Structuring Analytical Data
 
-The Gold notebook defines a dimensional model for flight analytics, consisting of a central fact table and six dimensions.
+**Approach:** Organize the cleaned flight data into a **star schema** consisting of one central fact table and six dimension tables.
 
-| Table | Role |
-|---|---|
-| `gold.fact_flights` | Flight records with dimensional references and operational attributes |
-| `gold.dim_date` | Calendar attributes derived from scheduled dates |
-| `gold.dim_airline` | Airline identifiers and names |
-| `gold.dim_airport` | Airport identifiers and names |
-| `gold.dim_aircraft` | Aircraft model and registration details |
-| `gold.dim_terminal` | Terminal reference values |
-| `gold.dim_status` | Flight status reference values |
+**Purpose:** Structure flight operations data for efficient analytical queries, aggregations, and dashboard reporting.
 
-The Gold notebook also contains analytical SQL for destination rankings, airline flight counts, flight status distribution, scheduled flight hours, and day-of-week patterns, alongside data-model checks.
+**Output:**
+- **Fact table:** `fact_flights`
+- **Dimension tables:** `dim_date`, `dim_airline`, `dim_airport`, `dim_aircraft`, `dim_terminal`, and `dim_status`
 
-**Notebook:** [`pipelines/gold/gold_layer.ipynb`](pipelines/gold/gold_layer.ipynb)
+**Implementation:** [Gold Notebook](pipelines/gold/gold_layer.ipynb)
 
 <a id="dashboard--user-interface"></a>
 ## 📈 Dashboard & User Interface
