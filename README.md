@@ -189,48 +189,52 @@ The repository contains these dashboard entry points:
 Airline-Analysis/
 ├── .devcontainer/
 │   └── devcontainer.json
+├── .gitignore
+├── .python-version
 ├── data/
 │   └── flights_RUH.parquet
 ├── exploration/
 ├── pipelines/
 │   ├── bronze/
 │   │   └── bronze_setup.ipynb
-│   ├── silver/
-│   │   └── silver_setup.ipynb
 │   ├── gold/
 │   │   └── gold_layer.ipynb
-│   └── setup/
-│       ├── create_schema.ipynb
-│       └── setup_permissions.ipynb
+│   ├── quality/
+│   │   └── quality_gate.ipynb
+│   ├── setup/
+│   │   ├── create_schema.ipynb
+│   │   └── setup_permissions.ipynb
+│   └── silver/
+│       └── silver_setup.ipynb
+├── pyproject.toml
+├── README.md
 ├── src/
 │   └── airline_analysis/
 │       └── __init__.py
 ├── streamlit_dashboard/
 │   ├── .streamlit/
 │   │   └── config.toml
-│   ├── pages/
-│   │   ├── Overview.py
-│   │   ├── Flight_Operations.py
-│   │   ├── Airport_Insights.py
-│   │   ├── Airline_Performance.py
-│   │   └── 4_Data_Quality.py
 │   ├── app.py
+│   ├── pages/
+│   │   ├── 4_Data_Quality.py
+│   │   ├── Airline_Performance.py
+│   │   ├── Airport_Insights.py
+│   │   ├── Flight_Operations.py
+│   │   └── Overview.py
 │   └── requirements.txt
-├── .gitignore
-├── .python-version
-├── pyproject.toml
-├── README.md
 └── uv.lock
 ```
+
 
 <a id="team"></a>
 ## 👥 Team
 
 Developed collaboratively as part of the **SDA × Le Wagon Data Engineering Bootcamp**.
 
-- **Elham Alansari**
-- **Razan Alzahrani**
-- **Maryam Mubarak**
-- **Nada Almutairi**
+- **[Elham Alansari](https://www.linkedin.com/in/elham-alansari-1a1344246/)**
+- **[Razan Alzahrani](https://www.linkedin.com/in/razan-alzahrani-89513620b/)**
+- **[Maryam Mubarak](https://www.linkedin.com/in/maryam-mubarak-548b42296/)**
+- **[Nada Almutairi](https://www.linkedin.com/in/nada-almetairi/)**
+
 
 <!-- Optional: Replace each team member's name with [Name](their-LinkedIn-profile-URL) when the team chooses to share profile links. -->
