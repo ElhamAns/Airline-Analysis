@@ -700,7 +700,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 team = [
-    ("MARIAM MUBARAK", "https://www.linkedin.com/in/maryam-mubarak-548b42296/"),
+    ("Maryam Mubarak", "https://www.linkedin.com/in/maryam-mubarak-548b42296/"),
     ("Razan Alzahrani", "https://www.linkedin.com/in/razan-alzahrani-89513620b/"),
     ("Elham Alansari", "https://www.linkedin.com/in/elham-alansari-1a1344246/"),
     ("Nada Almetairi", "https://www.linkedin.com/in/nada-almetairi/"),
