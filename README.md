@@ -234,7 +234,7 @@ Developed collaboratively as part of the **SDA × Le Wagon Data Engineering Boot
 - **[Elham Alansari](https://www.linkedin.com/in/elham-alansari-1a1344246/)**
 - **[Razan Alzahrani](https://www.linkedin.com/in/razan-alzahrani-89513620b/)**
 - **[Maryam Mubarak](https://www.linkedin.com/in/maryam-mubarak-548b42296/)**
-- **[Nada Almetairi]([https://www.linkedin.com/in/maryam-mubarak-548b42296/](https://www.linkedin.com/in/nada-almetairi/?isSelfProfile=false))**
+- **[Nada Almetairi](https://www.linkedin.com/in/nada-almetairi/?isSelfProfile=false)**
 
 
 <!-- Optional: Replace each team member's name with [Name](their-LinkedIn-profile-URL) when the team chooses to share profile links. -->
